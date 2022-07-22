@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 export KODILLA_HOME=/Users/kamil/Desktop/JAVA\ CRUD/tasks
-export TEST=/Users/kamil/Desktop/JAVA\ CRUD/tasks/runcrud.sh
 
 stop_runcrud()
 {
@@ -10,7 +9,7 @@ stop_runcrud()
 
 start_runcrud()
 {
-   $TEST start
+   $KODILLA_HOME/runcrud.sh start
    end
 }
 
