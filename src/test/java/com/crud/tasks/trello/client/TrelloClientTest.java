@@ -44,8 +44,10 @@ class TrelloClientTest {
 
         URI uri = new URI("http://test.com/members/test/boards?key=test&token=test&fields=name,id&lists=all");
         when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(trelloBoards);
+
         // When
         List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getTrelloBoards();
+
         // Then
         assertEquals(1, fetchedTrelloBoards.size());
         assertEquals("test_id", fetchedTrelloBoards.get(0).getId());
