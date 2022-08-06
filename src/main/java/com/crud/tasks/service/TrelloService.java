@@ -32,7 +32,7 @@ public class TrelloService {
                 .subject(SUBJECT)
                 .message("New card: " + trelloCardDto.getName() + " has been created on your Trello account")
                 .build())
-        `);
+        );
         return newCard;
     }
 }
