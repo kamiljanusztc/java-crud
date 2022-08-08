@@ -22,12 +22,12 @@ public class EmailScheduler {
         simpleEmailService.send(Mail.builder()
             .mailTo(adminConfig.getAdminMail())
             .subject(SUBJECT)
-            .message(getAmountOfTask())
+            .message(getAmountOfTasks())
             .build()
         );
     }
 
-    private String getAmountOfTask() {
+    private String getAmountOfTasks() {
         long size = taskRepository.count();
 
         if (size == 1) {
