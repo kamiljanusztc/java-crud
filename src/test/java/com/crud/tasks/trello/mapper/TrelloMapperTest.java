@@ -1,9 +1,6 @@
 package com.crud.tasks.trello.mapper;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -80,4 +77,67 @@ public class TrelloMapperTest {
         assertFalse(trelloBoardDtoList.get(0).getLists().get(1).isClosed());
     }
 
+    @Test
+    void mapToListTest() {
+        //Given
+        TrelloListDto trelloListDto1 = new TrelloListDto("1", "list name", true);
+        TrelloListDto trelloListDto2 = new TrelloListDto("2", "2 list name", false);
+        TrelloListDto trelloListDto3 = new TrelloListDto("3", "3 list name", true);
+
+        List<TrelloListDto> list1 = new ArrayList<>();
+
+        list1.add(trelloListDto1);
+        list1.add(trelloListDto2);
+        list1.add(trelloListDto3);
+
+        //When
+        List<TrelloList> trelloLists = trelloMapper.mapToList(list1);
+
+        //Then
+        assertTrue(trelloLists.get(2).isClosed());
+    }
+
+    @Test
+    void mapToListDtoTest() {
+        //Given
+        TrelloList trelloList1 = new TrelloList("1", "First", true);
+        TrelloList trelloList2 = new TrelloList("2", "Second", false);
+        TrelloList trelloList3 = new TrelloList("3", "Third", true);
+
+        List<TrelloList> list1 = new ArrayList<>();
+
+        list1.add(trelloList1);
+        list1.add(trelloList2);
+        list1.add(trelloList3);
+
+        //When
+        List<TrelloListDto> trelloListDtoList = trelloMapper.mapToListDto(list1);
+
+        //Then
+        assertEquals("2", trelloListDtoList.get(1).getId());
+    }
+
+    @Test
+    void mapToCardDto() {
+        //Given
+        TrelloCard trelloCard1 = new TrelloCard("Name", "Description", "1", "1");
+
+        //When
+        TrelloCardDto trelloCardDto = trelloMapper.mapToCardDto(trelloCard1);
+
+        //Then
+        assertEquals("Name", trelloCardDto.getName());
+    }
+
+    @Test
+    void mapToCard() {
+        //Given
+        TrelloCardDto trelloCardDto = new TrelloCardDto("First name", "First description", "1", "1");
+
+        //When
+        TrelloCard trelloCard = trelloMapper.mapToCard(trelloCardDto);
+
+        //Then
+        assertEquals("1", trelloCard.getListId());
+    }
 }
