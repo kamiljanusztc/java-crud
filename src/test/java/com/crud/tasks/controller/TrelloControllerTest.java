@@ -70,28 +70,28 @@ class TrelloControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].lists[0].closed", Matchers.is(false)));
     }
 
-    @Test
-    void shouldCreateTrelloCard() throws Exception {
-        // Given
-        TrelloCardDto trelloCardDto =
-                new TrelloCardDto("Test", "Test description", "top", "1");
-
-        CreatedTrelloCardDto createdTrelloCardDto =
-                new CreatedTrelloCardDto("232", "Test", "http://test.com");
-
-        when(trelloFacade.createCard(any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
-        Gson gson = new Gson();
-        String jsonContent = gson.toJson(trelloCardDto);
-
-        //When & Then
-        mockMvc
-                .perform(MockMvcRequestBuilders
-                        .post("/v1/trello/cards")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding("UTF-8")
-                        .content(jsonContent))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is("232")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Test")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.shortUrl", Matchers.is("http://test.com")));
-    }
+//    @Test
+//    void shouldCreateTrelloCard() throws Exception {
+//        // Given
+//        TrelloCardDto trelloCardDto =
+//                new TrelloCardDto("Test", "Test description", "top", "1");
+//
+//        CreatedTrelloCardDto createdTrelloCardDto =
+//                new CreatedTrelloCardDto("232", "Test", "http://test.com");
+//
+//        when(trelloFacade.createCard(any(TrelloCardDto.class))).thenReturn(createdTrelloCardDto);
+//        Gson gson = new Gson();
+//        String jsonContent = gson.toJson(trelloCardDto);
+//
+//        //When & Then
+//        mockMvc
+//                .perform(MockMvcRequestBuilders
+//                        .post("/v1/trello/cards")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .characterEncoding("UTF-8")
+//                        .content(jsonContent))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is("232")))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Test")))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.shortUrl", Matchers.is("http://test.com")));
+//    }
 }
