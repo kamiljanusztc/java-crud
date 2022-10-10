@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
+import com.crud.tasks.domain.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class MailCreatorService {
 
     @Autowired
     private AdminConfig adminConfig;
+
+    @Autowired
+    private DbService dbService;
 
     @Autowired
     @Qualifier("templateEngine")
@@ -39,5 +43,22 @@ public class MailCreatorService {
         context.setVariable("is_friend", false);
         context.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", context);
+    }
+
+    public String buildScheduledMailContext(String message) {
+
+        List<Task> availableTasks = dbService.getAllTasks();
+
+        Context context = new Context();
+        context.setVariable("message", message);
+        context.setVariable("tasks_url", "https://kamiljanusztc.github.io");
+        context.setVariable("button", "Contact us");
+        context.setVariable("preview_message", "Tasks");
+        context.setVariable("goodbye_message", "If necessary, please contact us");
+        context.setVariable("company_details", adminConfig.getAdminName() + adminConfig.getAdminMail());
+        context.setVariable("show_button", false);
+        context.setVariable("is_friend", false);
+        context.setVariable("tasks_database", availableTasks);
+        return templateEngine.process("mail/tasks-number-mail", context);
     }
 }
